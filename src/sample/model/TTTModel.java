@@ -6,6 +6,7 @@ package sample.model;
 public class TTTModel {
     private FieldState field[][];
     private FieldState currentState;
+    private FieldState winner;
     private int wonFields[][];
     private boolean isTie;
 
@@ -87,6 +88,7 @@ public class TTTModel {
     }
 
     private void finish(int x1, int y1, int x2, int y2, int x3, int y3) {
+        winner = currentState;
         currentState = FieldState.empty;
         wonFields = new int[3][2];
         wonFields[0][0] = x1;
@@ -128,5 +130,9 @@ public class TTTModel {
 
     public boolean isTie() {
         return isTie;
+    }
+
+    public FieldState getWinner() {
+        return winner;
     }
 }

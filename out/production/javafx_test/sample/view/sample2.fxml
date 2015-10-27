@@ -19,15 +19,19 @@
 <Group translateX="100" stylesheets="@./sample2.css" fx:id="mainGroup" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8"
        fx:controller="sample.controller.sample2Controller">
        <GridPane fx:id="mainGridPane" styleClass="fieldsGrid">
-              <Rectangle fx:id="1" onMouseClicked="#field_mouseClicked" stroke="black" strokeWidth="4" styleClass="field" height="100" width="100" GridPane.rowIndex="0" GridPane.columnIndex="0"></Rectangle>
-              <Rectangle fx:id="2" onMouseClicked="#field_mouseClicked" stroke="black" strokeWidth="4" styleClass="field" height="100" width="100" GridPane.rowIndex="0" GridPane.columnIndex="1"></Rectangle>
-              <Rectangle fx:id="3" onMouseClicked="#field_mouseClicked" stroke="black" strokeWidth="4" styleClass="field" height="100" width="100" GridPane.rowIndex="0" GridPane.columnIndex="2"></Rectangle>
-              <Rectangle fx:id="4" onMouseClicked="#field_mouseClicked" stroke="black" strokeWidth="4" styleClass="field" height="100" width="100" GridPane.rowIndex="1" GridPane.columnIndex="0"></Rectangle>
-              <Rectangle fx:id="5" onMouseClicked="#field_mouseClicked" stroke="black" strokeWidth="4" styleClass="field" height="100" width="100" GridPane.rowIndex="1" GridPane.columnIndex="1"></Rectangle>
-              <Rectangle fx:id="6" onMouseClicked="#field_mouseClicked" stroke="black" strokeWidth="4" styleClass="field" height="100" width="100" GridPane.rowIndex="1" GridPane.columnIndex="2"></Rectangle>
-              <Rectangle fx:id="7" onMouseClicked="#field_mouseClicked" stroke="black" strokeWidth="4" styleClass="field" height="100" width="100" GridPane.rowIndex="2" GridPane.columnIndex="0"></Rectangle>
-              <Rectangle fx:id="8" onMouseClicked="#field_mouseClicked" stroke="black" strokeWidth="4" styleClass="field" height="100" width="100" GridPane.rowIndex="2" GridPane.columnIndex="1"></Rectangle>
-              <Rectangle fx:id="9" onMouseClicked="#field_mouseClicked" stroke="black" strokeWidth="4" styleClass="field" height="100" width="100" GridPane.rowIndex="2" GridPane.columnIndex="2"></Rectangle>
+              <Rectangle fx:id="1" onMouseClicked="#field_mouseClicked" stroke="#888" strokeWidth="4" styleClass="field" height="100" width="100" GridPane.rowIndex="0" GridPane.columnIndex="0"></Rectangle>
+              <Rectangle fx:id="2" onMouseClicked="#field_mouseClicked" stroke="#888" strokeWidth="4" styleClass="field" height="100" width="100" GridPane.rowIndex="0" GridPane.columnIndex="1"></Rectangle>
+              <Rectangle fx:id="3" onMouseClicked="#field_mouseClicked" stroke="#888" strokeWidth="4" styleClass="field" height="100" width="100" GridPane.rowIndex="0" GridPane.columnIndex="2"></Rectangle>
+              <Rectangle fx:id="4" onMouseClicked="#field_mouseClicked" stroke="#888" strokeWidth="4" styleClass="field" height="100" width="100" GridPane.rowIndex="1" GridPane.columnIndex="0"></Rectangle>
+              <Rectangle fx:id="5" onMouseClicked="#field_mouseClicked" stroke="#888" strokeWidth="4" styleClass="field" height="100" width="100" GridPane.rowIndex="1" GridPane.columnIndex="1"></Rectangle>
+              <Rectangle fx:id="6" onMouseClicked="#field_mouseClicked" stroke="#888" strokeWidth="4" styleClass="field" height="100" width="100" GridPane.rowIndex="1" GridPane.columnIndex="2"></Rectangle>
+              <Rectangle fx:id="7" onMouseClicked="#field_mouseClicked" stroke="#888" strokeWidth="4" styleClass="field" height="100" width="100" GridPane.rowIndex="2" GridPane.columnIndex="0"></Rectangle>
+              <Rectangle fx:id="8" onMouseClicked="#field_mouseClicked" stroke="#888" strokeWidth="4" styleClass="field" height="100" width="100" GridPane.rowIndex="2" GridPane.columnIndex="1"></Rectangle>
+              <Rectangle fx:id="9" onMouseClicked="#field_mouseClicked" stroke="#888" strokeWidth="4" styleClass="field" height="100" width="100" GridPane.rowIndex="2" GridPane.columnIndex="2"></Rectangle>
        </GridPane>
+       <Label fx:id="gamerLabel1" translateX="-200" styleClass="gamerLabel">X`s player turn</Label>
+       <Label fx:id="gamerLabel2" translateX="350" styleClass="gamerLabel" opacity="0.0">O`s player turn</Label>
+       <Button translateX="60" translateY="350" fx:id="newGameButton" styleClass="newGameButton" onMouseClicked="#newGame">New game</Button>
        <Group fx:id="drawingGroup"/>
+       <Label fx:id="endGameLabel" translateX="10" translateY="-85" styleClass="endGameLabel" opacity="0.0">Tie</Label>
 </Group>

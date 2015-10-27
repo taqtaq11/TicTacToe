@@ -1,13 +1,17 @@
 package sample.controller;
 
+import javafx.animation.FadeTransition;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import sample.model.FieldState;
 import sample.model.TTTModel;
 import sample.view.TTTDrawingUtils;
@@ -21,11 +25,17 @@ public class sample2Controller {
     private final double CELL_OUTER_BORDER_SIZE = 4;
 
     private TTTDrawingUtils drawingUtils;
+    private TTTModel model;
+    private FadeTransition gamerLabel1FadeIn;
+    private FadeTransition gamerLabel2FadeIn;
+    private FadeTransition endGameLabelFadeIn;
 
     public Group mainGroup;
     public GridPane mainGridPane;
     public Group drawingGroup;
-    private TTTModel model;
+    public Label gamerLabel1;
+    public Label gamerLabel2;
+    public Label endGameLabel;
 
     public sample2Controller() {
         drawingUtils = new TTTDrawingUtils();
@@ -35,6 +45,33 @@ public class sample2Controller {
     public void initialize() {
         mainGroup.setTranslateX(SCREEN_WIDTH / 2 - CELL_SIZE * 1.5);
         mainGroup.setTranslateY(SCREEN_HEIGHT * 0.2);
+
+        gamerLabel1FadeIn = new FadeTransition(
+                Duration.millis(1000)
+        );
+        gamerLabel1FadeIn.setNode(gamerLabel1);
+        gamerLabel1FadeIn.setFromValue(0.0);
+        gamerLabel1FadeIn.setToValue(1.0);
+        gamerLabel1FadeIn.setCycleCount(1);
+        gamerLabel1FadeIn.setAutoReverse(false);
+
+        gamerLabel2FadeIn = new FadeTransition(
+                Duration.millis(1000)
+        );
+        gamerLabel2FadeIn.setNode(gamerLabel2);
+        gamerLabel2FadeIn.setFromValue(0.0);
+        gamerLabel2FadeIn.setToValue(1.0);
+        gamerLabel2FadeIn.setCycleCount(1);
+        gamerLabel2FadeIn.setAutoReverse(false);
+
+        endGameLabelFadeIn = new FadeTransition(
+                Duration.millis(3000)
+        );
+        endGameLabelFadeIn.setNode(endGameLabel);
+        endGameLabelFadeIn.setFromValue(0.0);
+        endGameLabelFadeIn.setToValue(1.0);
+        endGameLabelFadeIn.setCycleCount(1);
+        endGameLabelFadeIn.setAutoReverse(false);
     }
 
     public void field_mouseClicked(Event event) {
@@ -43,30 +80,72 @@ public class sample2Controller {
         int i = (fieldId - 1) % 3;
         int j = (fieldId - 1) / 3;
 
-        switch (model.trySetField(i, j)) {
+        FieldState fs = model.trySetField(i, j);
+
+        if (fs == null)
+            return;
+
+        switch (fs) {
             case x:
                 double width = field.getWidth();
                 double leftX = CELL_OUTER_BORDER_SIZE + (CELL_SIZE  + CELL_BORDER_SIZE) * i;
                 double leftY = CELL_OUTER_BORDER_SIZE + (CELL_SIZE  + CELL_BORDER_SIZE) * j;
                 drawingUtils.drawCross(leftX, leftY, width, drawingGroup);
+
+                gamerLabel2FadeIn.setFromValue(0.0);
+                gamerLabel2FadeIn.setToValue(1.0);
+                gamerLabel2FadeIn.playFromStart();
+
+                gamerLabel1FadeIn.setFromValue(1.0);
+                gamerLabel1FadeIn.setToValue(0.0);
+                gamerLabel1FadeIn.playFromStart();
                 break;
             case o:
                 double radius = field.getWidth() / 2;
                 double centerX = CELL_OUTER_BORDER_SIZE + (CELL_SIZE  + CELL_BORDER_SIZE) * i + radius;
                 double centerY = CELL_OUTER_BORDER_SIZE + (CELL_SIZE  + CELL_BORDER_SIZE) * j + radius;
                 drawingUtils.drawToe(centerX, centerY, radius - 10, drawingGroup);
+
+                gamerLabel1FadeIn.setFromValue(0.0);
+                gamerLabel1FadeIn.setToValue(1.0);
+                gamerLabel1FadeIn.playFromStart();
+
+                gamerLabel2FadeIn.setFromValue(1.0);
+                gamerLabel2FadeIn.setToValue(0.0);
+                gamerLabel2FadeIn.playFromStart();
                 break;
         }
 
         if (model.isFinished()) {
             if (model.isTie()) {
-
+                endGameLabel.setText("Tie");
+                endGameLabel.setTextFill(Color.web("#888"));
             }
             else {
-                highlightWonFields(model.getWonFields()[0][0] * 3 + model.getWonFields()[0][1] + 1,
+                if (model.getWinner() == FieldState.x) {
+                    endGameLabel.setText("The winner is X");
+                    endGameLabel.setTextFill(Color.DARKBLUE);
+                }
+                else {
+                    endGameLabel.setText("The winner is O");
+                    endGameLabel.setTextFill(Color.DARKRED);
+                }
+                /*highlightWonFields(model.getWonFields()[0][0] * 3 + model.getWonFields()[0][1] + 1,
                         model.getWonFields()[1][0] * 3 + model.getWonFields()[1][1] + 1,
-                        model.getWonFields()[2][0] * 3 + model.getWonFields()[2][1] + 1);
+                        model.getWonFields()[2][0] * 3 + model.getWonFields()[2][1] + 1);*/
             }
+
+            gamerLabel1FadeIn.setFromValue(gamerLabel1.getOpacity());
+            gamerLabel1FadeIn.setToValue(0.0);
+            gamerLabel1FadeIn.playFromStart();
+
+            gamerLabel2FadeIn.setFromValue(gamerLabel2.getOpacity());
+            gamerLabel2FadeIn.setToValue(0.0);
+            gamerLabel2FadeIn.playFromStart();
+
+            endGameLabelFadeIn.setFromValue(0.0);
+            endGameLabelFadeIn.setToValue(1.0);
+            endGameLabelFadeIn.playFromStart();
         }
     }
 
@@ -87,5 +166,18 @@ public class sample2Controller {
 
             }
         }
+    }
+
+    public void newGame(Event event) {
+        model.newGame();
+        drawingGroup.getChildren().clear();
+        gamerLabel1.setOpacity(1.0);
+        gamerLabel2.setOpacity(0.0);
+
+        endGameLabelFadeIn.setFromValue(endGameLabel.getOpacity());
+        endGameLabelFadeIn.setDuration(Duration.millis(1000));
+        endGameLabelFadeIn.setToValue(0.0);
+        endGameLabelFadeIn.playFromStart();
+        endGameLabelFadeIn.setDuration(Duration.millis(3000));
     }
 }
