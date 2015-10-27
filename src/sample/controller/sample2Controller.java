@@ -8,9 +8,21 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import sample.Main;
 import sample.model.FieldState;
 import sample.model.TTTModel;
 import sample.view.TTTDrawingUtils;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 
 public class sample2Controller {
     private final int SCREEN_WIDTH = 800;
@@ -38,6 +50,8 @@ public class sample2Controller {
     }
 
     public void field_mouseClicked(Event event) {
+        playSound("sounds/paper1.wav", 1000);
+
         Rectangle field = (Rectangle)event.getSource();
         int fieldId = Integer.parseInt(field.getId());
         int i = (fieldId - 1) % 3;
@@ -87,5 +101,20 @@ public class sample2Controller {
 
             }
         }
+    }
+
+    public static synchronized void playSound(String filename, int duration) {
+        new Thread(() -> {
+            try {
+                String fullpath = Main.class.getResource(filename).getPath();
+                InputStream in = new FileInputStream(fullpath);
+                AudioStream as =  new AudioStream(in);
+                AudioPlayer.player.start(as);
+                Thread.sleep(duration);
+                AudioPlayer.player.stop(as);
+            } catch(Exception ex) {
+
+            }
+        }).start();
     }
 }
