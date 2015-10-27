@@ -59,14 +59,19 @@ public class sample2Controller {
         }
 
         if (model.isFinished()) {
-            highlightWonFields(model.getWonFields()[0][0] * 3 + model.getWonFields()[0][1] + 1,
-                    model.getWonFields()[1][0] * 3 + model.getWonFields()[1][1] + 1,
-                    model.getWonFields()[2][0] * 3 + model.getWonFields()[2][1] + 1);
+            if (model.isTie()) {
+
+            }
+            else {
+                highlightWonFields(model.getWonFields()[0][0] * 3 + model.getWonFields()[0][1] + 1,
+                        model.getWonFields()[1][0] * 3 + model.getWonFields()[1][1] + 1,
+                        model.getWonFields()[2][0] * 3 + model.getWonFields()[2][1] + 1);
+            }
         }
     }
 
     private void highlightWonFields(int i, int j, int k) {
-        /*ObservableList<Node> children = mainGP.getChildren();
+        ObservableList<Node> children = mainGridPane.getChildren();
         for (int l = 0; l < children.size(); l++) {
             Node child = children.get(l);
 
@@ -81,6 +86,6 @@ public class sample2Controller {
             {
 
             }
-        }*/
+        }
     }
 }

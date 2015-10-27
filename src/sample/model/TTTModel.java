@@ -7,6 +7,7 @@ public class TTTModel {
     private FieldState field[][];
     private FieldState currentState;
     private int wonFields[][];
+    private boolean isTie;
 
     public TTTModel() {
         field = new FieldState[3][3];
@@ -39,6 +40,18 @@ public class TTTModel {
         return true;
     }
 
+    private boolean checkNoEmptyFields() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (field[i][j] == FieldState.empty) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
     private boolean tryFinish(int i, int j, FieldState state) {
         if ((field[i][0] == state) && (field[i][1] == state) && (field[i][2] == state)) {
             finish(i, 0, i, 1, i, 2);
@@ -60,11 +73,22 @@ public class TTTModel {
             return true;
         }
 
+        if (checkNoEmptyFields()) {
+            finish();
+            return true;
+        }
+
         return false;
+    }
+
+    private void finish() {
+        currentState = FieldState.empty;
+        isTie = true;
     }
 
     private void finish(int x1, int y1, int x2, int y2, int x3, int y3) {
         currentState = FieldState.empty;
+        wonFields = new int[3][2];
         wonFields[0][0] = x1;
         wonFields[0][1] = y1;
         wonFields[1][0] = x2;
@@ -85,7 +109,8 @@ public class TTTModel {
     public void newGame() {
         clearField();
         currentState = FieldState.x;
-        wonFields = new int[3][2];
+        wonFields = null;
+        isTie = false;
     }
 
     public FieldState trySetField(int i, int j) {
@@ -99,5 +124,9 @@ public class TTTModel {
         }
 
         return field[i][j];
+    }
+
+    public boolean isTie() {
+        return isTie;
     }
 }

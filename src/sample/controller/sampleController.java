@@ -38,10 +38,10 @@ public class sampleController {
                 break;
         }
 
-        if (model.currentState == FieldState.empty) {
-            highlightWonFields(model.wonFields[0][0] * 3 + model.wonFields[0][1] + 1,
-                    model.wonFields[1][0] * 3 + model.wonFields[1][1] + 1,
-                    model.wonFields[2][0] * 3 + model.wonFields[2][1] + 1);
+        if (model.isFinished()) {
+            highlightWonFields(model.getWonFields()[0][0] * 3 + model.getWonFields()[0][1] + 1,
+                    model.getWonFields()[1][0] * 3 + model.getWonFields()[1][1] + 1,
+                    model.getWonFields()[2][0] * 3 + model.getWonFields()[2][1] + 1);
         }
     }
 
