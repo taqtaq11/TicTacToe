@@ -1,0 +1,9 @@
+.TTTCell {
+    -fx-font-weight: bold;
+    -fx-padding: 0;
+    -fx-font-size: 22px;
+}
+
+.highlighted {
+    -fx-background-color: green;
+}

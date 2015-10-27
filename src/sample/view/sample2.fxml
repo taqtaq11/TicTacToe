@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableRow?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.Group?>
+
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Path?>
+<?import javafx.scene.shape.Rectangle?>
+
+<Group translateX="100" stylesheets="@./sample2.css" fx:id="mainGroup" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8"
+       fx:controller="sample.controller.sample2Controller">
+       <GridPane fx:id="mainGridPane" styleClass="fieldsGrid">
+              <Rectangle fx:id="1" onMouseClicked="#field_mouseClicked" stroke="black" strokeWidth="4" styleClass="field" height="100" width="100" GridPane.rowIndex="0" GridPane.columnIndex="0"></Rectangle>
+              <Rectangle fx:id="2" onMouseClicked="#field_mouseClicked" stroke="black" strokeWidth="4" styleClass="field" height="100" width="100" GridPane.rowIndex="0" GridPane.columnIndex="1"></Rectangle>
+              <Rectangle fx:id="3" onMouseClicked="#field_mouseClicked" stroke="black" strokeWidth="4" styleClass="field" height="100" width="100" GridPane.rowIndex="0" GridPane.columnIndex="2"></Rectangle>
+              <Rectangle fx:id="4" onMouseClicked="#field_mouseClicked" stroke="black" strokeWidth="4" styleClass="field" height="100" width="100" GridPane.rowIndex="1" GridPane.columnIndex="0"></Rectangle>
+              <Rectangle fx:id="5" onMouseClicked="#field_mouseClicked" stroke="black" strokeWidth="4" styleClass="field" height="100" width="100" GridPane.rowIndex="1" GridPane.columnIndex="1"></Rectangle>
+              <Rectangle fx:id="6" onMouseClicked="#field_mouseClicked" stroke="black" strokeWidth="4" styleClass="field" height="100" width="100" GridPane.rowIndex="1" GridPane.columnIndex="2"></Rectangle>
+              <Rectangle fx:id="7" onMouseClicked="#field_mouseClicked" stroke="black" strokeWidth="4" styleClass="field" height="100" width="100" GridPane.rowIndex="2" GridPane.columnIndex="0"></Rectangle>
+              <Rectangle fx:id="8" onMouseClicked="#field_mouseClicked" stroke="black" strokeWidth="4" styleClass="field" height="100" width="100" GridPane.rowIndex="2" GridPane.columnIndex="1"></Rectangle>
+              <Rectangle fx:id="9" onMouseClicked="#field_mouseClicked" stroke="black" strokeWidth="4" styleClass="field" height="100" width="100" GridPane.rowIndex="2" GridPane.columnIndex="2"></Rectangle>
+       </GridPane>
+       <Group fx:id="drawingGroup"/>
+</Group>
