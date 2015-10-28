@@ -12,9 +12,15 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import sample.Main;
 import sample.model.FieldState;
 import sample.model.TTTModel;
 import sample.view.TTTDrawingUtils;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
+
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 public class sample2Controller {
     private final int SCREEN_WIDTH = 800;
@@ -75,6 +81,7 @@ public class sample2Controller {
     }
 
     public void field_mouseClicked(Event event) {
+
         Rectangle field = (Rectangle)event.getSource();
         int fieldId = Integer.parseInt(field.getId());
         int i = (fieldId - 1) % 3;
@@ -99,6 +106,8 @@ public class sample2Controller {
                 gamerLabel1FadeIn.setFromValue(1.0);
                 gamerLabel1FadeIn.setToValue(0.0);
                 gamerLabel1FadeIn.playFromStart();
+
+                playSound("sounds/paper1.wav", 1000);
                 break;
             case o:
                 double radius = field.getWidth() / 2;
@@ -113,6 +122,8 @@ public class sample2Controller {
                 gamerLabel2FadeIn.setFromValue(1.0);
                 gamerLabel2FadeIn.setToValue(0.0);
                 gamerLabel2FadeIn.playFromStart();
+
+                playSound("sounds/paper1.wav", 1000);
                 break;
         }
 
@@ -146,6 +157,8 @@ public class sample2Controller {
             endGameLabelFadeIn.setFromValue(0.0);
             endGameLabelFadeIn.setToValue(1.0);
             endGameLabelFadeIn.playFromStart();
+
+            playSound("sounds/Fortuna.wav", 14500);
         }
     }
 
@@ -180,4 +193,20 @@ public class sample2Controller {
         endGameLabelFadeIn.playFromStart();
         endGameLabelFadeIn.setDuration(Duration.millis(3000));
     }
+
+    public static synchronized void playSound(String filename, int duration) {
+        new Thread(() -> {
+            try {
+                String fullpath = Main.class.getResource(filename).getPath();
+                InputStream in = new FileInputStream(fullpath);
+                AudioStream as =  new AudioStream(in);
+                AudioPlayer.player.start(as);
+                Thread.sleep(duration);
+                AudioPlayer.player.stop(as);
+            } catch(Exception ex) {
+
+            }
+        }).start();
+    }
+
 }
